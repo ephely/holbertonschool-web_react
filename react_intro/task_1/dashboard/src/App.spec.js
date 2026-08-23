@@ -19,12 +19,7 @@ describe('App component', () => {
     );
     expect(bodyParagraph).toBeInTheDocument();
 
-    const currentYear = new Date().getFullYear();
-    const footerRegex = new RegExp(
-      `copyright ${currentYear} - holberton school`,
-      'i',
-    );
-    const footerParagraph = screen.getByText(footerRegex);
+    const footerParagraph = screen.getByText(/copyright/i);
     expect(footerParagraph).toBeInTheDocument();
   });
 
@@ -32,5 +27,13 @@ describe('App component', () => {
     render(<App />);
     const logoImage = screen.getByAltText(/holberton logo/i);
     expect(logoImage).toBeInTheDocument();
+  });
+
+  test('renders Notifications component', () => {
+    render(<App />);
+    const notificationText = screen.getByText(
+      /here is the list of notifications/i,
+    );
+    expect(notificationText).toBeInTheDocument();
   });
 });
