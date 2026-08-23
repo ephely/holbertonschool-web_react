@@ -33,7 +33,20 @@ body {
 
 .App-body p {
   font-size: 1.2rem;
-  margin: 0;
+  margin-bottom: 20px;
+}
+
+.App-body label {
+  margin-right: 5px;
+}
+
+.App-body input {
+  margin-right: 15px;
+}
+
+.App-body button {
+  margin-left: 5px;
+  cursor: pointer;
 }
 
 .App-footer {
