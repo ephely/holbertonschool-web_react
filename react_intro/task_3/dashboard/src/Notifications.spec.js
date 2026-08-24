@@ -14,10 +14,14 @@ describe('Notifications component', () => {
     expect(buttonElement).toBeInTheDocument();
   });
 
-  test('renders 3 list item elements', () => {
+  test('renders 3 list item elements and checks their text content ignoring case', () => {
     render(<Notifications />);
     const listItems = screen.getAllByRole('listitem');
     expect(listItems).toHaveLength(3);
+
+    expect(screen.getByText(/new course available/i)).toBeInTheDocument();
+    expect(screen.getByText(/new resume available/i)).toBeInTheDocument();
+    expect(screen.getByText(/urgent requirement/i)).toBeInTheDocument();
   });
 
   test('logs "Close button has been clicked" to the console when close button is clicked', () => {
