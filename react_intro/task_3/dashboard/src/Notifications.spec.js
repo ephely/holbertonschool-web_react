@@ -14,7 +14,7 @@ describe('Notifications component', () => {
     expect(buttonElement).toBeInTheDocument();
   });
 
-  test('renders 3 list item elements and checks their text content ignoring case', () => {
+  test('renders 3 list item elements', () => {
     render(<Notifications />);
     const listItems = screen.getAllByRole('listitem');
     expect(listItems).toHaveLength(3);
