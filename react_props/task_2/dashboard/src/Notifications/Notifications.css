@@ -1,0 +1,17 @@
+.notification-items {
+  border: 2px dashed #e1003c;
+  padding: 10px 20px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.notification-items p {
+  margin: 0;
+  padding-right: 25px;
+}
+
+.notification-items ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
