@@ -1,60 +1,35 @@
 import PropTypes from 'prop-types';
-import closeIcon from '../assets/close-button.png';
-import NotificationItem from './NotificationItem';
-import './Notifications.css';
 
-function Notifications({ notifications = [] }) {
-  const handleCloseClick = () => {
-    console.log('Close button has been clicked');
+function NotificationItem({ type = 'default', html, value }) {
+  const isUrgent = type === 'urgent';
+  const itemStyle = {
+    color: isUrgent ? 'red' : 'blue',
   };
 
+  if (html) {
+    return (
+      <li
+        data-priority={type}
+        data-notification-type={type}
+        style={itemStyle}
+        dangerouslySetInnerHTML={html}
+      />
+    );
+  }
+
   return (
-    <div className="notification-items">
-      <button
-        type="button"
-        aria-label="Close"
-        onClick={handleCloseClick}
-        style={{
-          position: 'absolute',
-          top: '10px',
-          right: '10px',
-          background: 'transparent',
-          border: 'none',
-          cursor: 'pointer',
-        }}
-      >
-        <img
-          src={closeIcon}
-          alt="close icon"
-          style={{ width: '15px', height: '15px' }}
-        />
-      </button>
-      <p>Here is the list of notifications</p>
-      <ul>
-        {notifications.map((notification) => (
-          <NotificationItem
-            key={notification.id}
-            type={notification.type}
-            value={notification.value}
-            html={notification.html}
-          />
-        ))}
-      </ul>
-    </div>
+    <li data-priority={type} data-notification-type={type} style={itemStyle}>
+      {value}
+    </li>
   );
 }
 
-Notifications.propTypes = {
-  notifications: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
-      value: PropTypes.string,
-      html: PropTypes.shape({
-        __html: PropTypes.string,
-      }),
-    }),
-  ),
+NotificationItem.propTypes = {
+  type: PropTypes.string,
+  html: PropTypes.shape({
+    __html: PropTypes.string,
+  }),
+  value: PropTypes.string,
 };
 
-export default Notifications;
+export default NotificationItem;

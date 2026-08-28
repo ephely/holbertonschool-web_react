@@ -15,3 +15,14 @@
   margin-top: 10px;
   padding-left: 20px;
 }
+
+/* garantie pour affichage des couleurs */
+.notification-items li[data-priority='default'],
+.notification-items li[data-notification-type='default'] {
+  color: blue;
+}
+
+.notification-items li[data-priority='urgent'],
+.notification-items li[data-notification-type='urgent'] {
+  color: red;
+}
