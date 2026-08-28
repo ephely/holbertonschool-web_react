@@ -37,9 +37,10 @@ function CourseList({ courses = [] }) {
 CourseList.propTypes = {
   courses: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
       name: PropTypes.string.isRequired,
-      credit: PropTypes.number.isRequired,
+      credit: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+        .isRequired,
     }),
   ),
 };
