@@ -15,17 +15,13 @@ function CourseList({ courses = [] }) {
       </thead>
       <tbody>
         {courses.length === 0 ? (
-          <CourseListRow
-            textFirstCell="No course available yet"
-            isHeader={false}
-          />
+          <CourseListRow textFirstCell="No course available yet" />
         ) : (
           courses.map((course) => (
             <CourseListRow
               key={course.id}
               textFirstCell={course.name}
               textSecondCell={course.credit}
-              isHeader={false}
             />
           ))
         )}
