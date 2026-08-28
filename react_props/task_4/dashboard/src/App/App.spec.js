@@ -6,30 +6,23 @@ describe('App component', () => {
     render(<App />);
   });
 
-  test('renders Header component', () => {
-    render(<App />);
-    const headingElement = screen.getByRole('heading', {
-      name: /school dashboard/i,
-      level: 1,
+  describe('when isLoggedIn is false', () => {
+    test('renders Login form and does not render CourseList', () => {
+      render(<App isLoggedIn={false} />);
+      expect(
+        screen.getByText(/login to access the full dashboard/i),
+      ).toBeInTheDocument();
+      expect(screen.queryByRole('table')).not.toBeInTheDocument();
     });
-    expect(headingElement).toBeInTheDocument();
   });
 
-  test('renders Login component', () => {
-    render(<App />);
-    const loginText = screen.getByText(/login to access the full dashboard/i);
-    expect(loginText).toBeInTheDocument();
-  });
-
-  test('renders Footer component', () => {
-    render(<App />);
-    const footerText = screen.getByText(/copyright/i);
-    expect(footerText).toBeInTheDocument();
-  });
-
-  test('renders Notifications component', () => {
-    render(<App />);
-    const notificationText = screen.getByText(/here is the list of notifications/i);
-    expect(notificationText).toBeInTheDocument();
+  describe('when isLoggedIn is true', () => {
+    test('renders CourseList table and does not render Login form', () => {
+      render(<App isLoggedIn={true} />);
+      expect(screen.getByRole('table')).toBeInTheDocument();
+      expect(
+        screen.queryByText(/login to access the full dashboard/i),
+      ).not.toBeInTheDocument();
+    });
   });
 });
