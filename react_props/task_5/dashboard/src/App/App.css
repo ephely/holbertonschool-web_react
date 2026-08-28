@@ -1,0 +1,8 @@
+.App {
+  position: relative;
+  min-height: 100vh;
+}
+
+.App-body {
+  padding: 20px;
+}
