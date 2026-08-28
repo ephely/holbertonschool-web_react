@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import closeIcon from '../assets/close-button.png';
-import NotificationItem from './NotificationItem.jsx';
+import NotificationItem from './NotificationItem';
 import './Notifications.css';
 
 function Notifications({ notifications = [] }) {

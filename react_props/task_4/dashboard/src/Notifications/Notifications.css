@@ -1,0 +1,28 @@
+.notification-items {
+  border: 2px dashed #e1003c;
+  padding: 10px 20px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.notification-items p {
+  margin: 0;
+  padding-right: 25px;
+}
+
+.notification-items ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+/* garantie pour affichage des couleurs */
+.notification-items li[data-priority='default'],
+.notification-items li[data-notification-type='default'] {
+  color: blue;
+}
+
+.notification-items li[data-priority='urgent'],
+.notification-items li[data-notification-type='urgent'] {
+  color: red;
+}

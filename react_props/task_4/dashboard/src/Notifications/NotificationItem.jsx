@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 
 function NotificationItem({ type = 'default', html, value }) {
+  const isUrgent = type === 'urgent';
   const itemStyle = {
-    color: type === 'urgent' ? 'red' : 'blue',
+    color: isUrgent ? 'red' : 'blue',
   };
 
   if (html) {
