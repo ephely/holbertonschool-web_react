@@ -15,15 +15,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown(event) {
-    if (event.ctrlKey && event.key === 'h') {
+    if (event.ctrlKey && (event.key === 'h' || event.key === 'H')) {
       alert('Logging you out');
       this.props.logOut();
     }
