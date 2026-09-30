@@ -6,23 +6,33 @@ describe('App component', () => {
     render(<App />);
   });
 
+  test('renders "News from the School" title and paragraph by default', () => {
+    render(<App />);
+    expect(
+      screen.getByRole('heading', { name: /news from the school/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/holberton school news goes here/i),
+    ).toBeInTheDocument();
+  });
+
   describe('when isLoggedIn is false', () => {
-    test('renders Login form and does not render CourseList', () => {
+    test('renders Login form wrapped in BodySectionWithMarginBottom and not CourseList', () => {
       render(<App isLoggedIn={false} />);
       expect(
-        screen.getByText(/login to access the full dashboard/i),
+        screen.getByRole('heading', { name: /log in to continue/i }),
       ).toBeInTheDocument();
       expect(screen.queryByRole('table')).not.toBeInTheDocument();
     });
   });
 
   describe('when isLoggedIn is true', () => {
-    test('renders CourseList table and does not render Login form', () => {
+    test('renders CourseList table wrapped in BodySectionWithMarginBottom and not Login form', () => {
       render(<App isLoggedIn={true} />);
-      expect(screen.getByRole('table')).toBeInTheDocument();
       expect(
-        screen.queryByText(/login to access the full dashboard/i),
-      ).not.toBeInTheDocument();
+        screen.getByRole('heading', { name: /course list/i }),
+      ).toBeInTheDocument();
+      expect(screen.getByRole('table')).toBeInTheDocument();
     });
   });
 
