@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class NotificationItem extends PureComponent {
+class NotificationItem extends Component {
   render() {
     const { type, html, value, markAsRead, id } = this.props;
 
