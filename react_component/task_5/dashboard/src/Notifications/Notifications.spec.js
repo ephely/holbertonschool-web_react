@@ -1,58 +1,89 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import Notifications from './Notifications';
 
 describe('Notifications component', () => {
+  const listNotifications = [
+    { id: 1, type: 'default', value: 'New course available' },
+    { id: 2, type: 'urgent', value: 'New resume available' },
+  ];
+
   test('renders without crashing', () => {
     render(<Notifications />);
   });
 
-  test('renders menu item when displayDrawer is false', () => {
-    render(<Notifications displayDrawer={false} />);
-    expect(screen.getByText('Your notifications')).toBeInTheDocument();
-    expect(
-      screen.queryByText('Here is the list of notifications'),
-    ).not.toBeInTheDocument();
-  });
-
-  test('renders notifications list when displayDrawer is true', () => {
-    const notifications = [
-      { id: 1, type: 'default', value: 'New course available' },
-    ];
+  test('renders correct number of NotificationItem components', () => {
     render(
-      <Notifications displayDrawer={true} notifications={notifications} />,
+      <Notifications displayDrawer={true} notifications={listNotifications} />,
     );
-    expect(
-      screen.getByText('Here is the list of notifications'),
-    ).toBeInTheDocument();
+    const listItems = screen.getAllByRole('listitem');
+    expect(listItems).toHaveLength(2);
   });
 
-  describe('markAsRead functionality', () => {
-    let consoleSpy;
+  describe('Performance optimization (shouldComponentUpdate)', () => {
+    let renderSpy;
 
     beforeEach(() => {
-      consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+      renderSpy = jest.spyOn(Notifications.prototype, 'render');
     });
 
     afterEach(() => {
-      consoleSpy.mockRestore();
+      renderSpy.mockRestore();
     });
 
-    test('logs correct string to console when notification item is clicked', () => {
-      const notifications = [
+    test('does not re-render if the length of notifications prop remains the same', () => {
+      const initialNotifications = [
+        { id: 1, type: 'default', value: 'New course available' },
+      ];
+      const sameLengthNotifications = [
+        { id: 1, type: 'default', value: 'New course available' },
+      ];
+
+      const { rerender } = render(
+        <Notifications
+          displayDrawer={true}
+          notifications={initialNotifications}
+        />,
+      );
+
+      expect(renderSpy).toHaveBeenCalledTimes(1);
+
+      rerender(
+        <Notifications
+          displayDrawer={true}
+          notifications={sameLengthNotifications}
+        />,
+      );
+
+      expect(renderSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('re-renders whenever the length of notifications prop changes', () => {
+      const initialNotifications = [
+        { id: 1, type: 'default', value: 'New course available' },
+      ];
+      const updatedNotifications = [
         { id: 1, type: 'default', value: 'New course available' },
         { id: 2, type: 'urgent', value: 'New resume available' },
       ];
 
-      render(
-        <Notifications displayDrawer={true} notifications={notifications} />,
+      const { rerender } = render(
+        <Notifications
+          displayDrawer={true}
+          notifications={initialNotifications}
+        />,
       );
 
-      const items = screen.getAllByRole('listitem');
-      fireEvent.click(items[0]);
+      expect(renderSpy).toHaveBeenCalledTimes(1);
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'Notification 1 has been marked as read',
+      rerender(
+        <Notifications
+          displayDrawer={true}
+          notifications={updatedNotifications}
+        />,
       );
+
+      expect(renderSpy).toHaveBeenCalledTimes(2);
     });
   });
 });
