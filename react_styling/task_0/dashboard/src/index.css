@@ -109,15 +109,3 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
-
-@import 'tailwindcss';
-
-@theme {
-  --font-roboto: 'Roboto', sans-serif;
-}
-
-@layer base {
-  body {
-    font-family: var(--font-roboto);
-  }
-}
