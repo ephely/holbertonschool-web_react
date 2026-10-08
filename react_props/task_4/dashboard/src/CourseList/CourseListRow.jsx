@@ -21,14 +21,6 @@ function CourseListRow({
     );
   }
 
-  if (textSecondCell === null) {
-    return (
-      <tr>
-        <td colSpan="2">{textFirstCell}</td>
-      </tr>
-    );
-  }
-
   return (
     <tr>
       <td>{textFirstCell}</td>
