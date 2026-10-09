@@ -7,8 +7,8 @@ class NotificationItem extends PureComponent {
 
     const textColorClass =
       type === 'urgent'
-        ? 'text-[var(--urgent-notification-item)] font-bold'
-        : 'text-[var(--default-notification-item)]';
+        ? 'text-[var(--color-urgent-notification-item)]'
+        : 'text-[var(--color-default-notification-item)]';
 
     if (html) {
       return (

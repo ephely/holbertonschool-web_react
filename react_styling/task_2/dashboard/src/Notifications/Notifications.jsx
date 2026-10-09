@@ -40,12 +40,12 @@ class Notifications extends Component {
     const { displayDrawer, notifications } = this.props;
 
     return (
-      <div className="NotificationsComp absolute right-3 top-3 z-10 flex flex-col items-end">
-        <div className="menuItem font-bold cursor-pointer mb-2">
+      <div className="NotificationsComp absolute top-3 right-3 flex flex-col items-end float-right">
+        <div className="menuItem font-normal text-right mb-1">
           Your notifications
         </div>
         {displayDrawer && (
-          <div className="Notifications relative w-[25%] min-w-[300px] border-2 border-dotted border-[var(--main-color)] p-[6px] bg-white">
+          <div className="Notifications relative border-2 border-dotted border-[var(--color-main-color)] p-[6px] w-[350px]">
             <button
               style={{
                 position: 'absolute',
@@ -58,31 +58,27 @@ class Notifications extends Component {
               aria-label="Close"
               onClick={() => console.log('Close button has been clicked')}
             >
-              <img src={closeIcon} alt="close icon" width="10px" />
+              <img src={closeIcon} alt="close icon" className="w-2.5 h-2.5" />
             </button>
-            {notifications && notifications.length > 0 ? (
-              <>
-                <p className="text-sm font-medium mb-2">
-                  Here is the list of notifications
-                </p>
-                <ul className="list-disc pl-5">
-                  {notifications.map((notif) => (
-                    <NotificationItem
-                      key={notif.id}
-                      id={notif.id}
-                      type={notif.type}
-                      value={notif.value}
-                      html={notif.html}
-                      markAsRead={this.markAsRead}
-                    />
-                  ))}
-                </ul>
-              </>
-            ) : (
-              <ul className="list-none p-0 m-0">
-                <NotificationItem value="No new notification for now" />
-              </ul>
+            {notifications.length > 0 && (
+              <p className="m-0 pr-6">Here is the list of notifications</p>
             )}
+            <ul className="list-disc pl-8 m-0">
+              {notifications.length === 0 ? (
+                <NotificationItem value="No new notification for now" />
+              ) : (
+                notifications.map((notif) => (
+                  <NotificationItem
+                    key={notif.id}
+                    id={notif.id}
+                    type={notif.type}
+                    value={notif.value}
+                    html={notif.html}
+                    markAsRead={this.markAsRead}
+                  />
+                ))
+              )}
+            </ul>
           </div>
         )}
       </div>
