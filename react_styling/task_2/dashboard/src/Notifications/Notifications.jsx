@@ -60,7 +60,7 @@ class Notifications extends Component {
             >
               <img src={closeIcon} alt="close icon" width="10px" />
             </button>
-            {notifications.length > 0 ? (
+            {notifications && notifications.length > 0 ? (
               <>
                 <p className="text-sm font-medium mb-2">
                   Here is the list of notifications
@@ -79,7 +79,9 @@ class Notifications extends Component {
                 </ul>
               </>
             ) : (
-              <p className="text-sm font-medium">No new notification for now</p>
+              <ul className="list-none p-0 m-0">
+                <NotificationItem value="No new notification for now" />
+              </ul>
             )}
           </div>
         )}
