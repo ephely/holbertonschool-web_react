@@ -79,9 +79,7 @@ class Notifications extends Component {
                 </ul>
               </>
             ) : (
-              <ul>
-                <NotificationItem value="No new notification for now" />
-              </ul>
+              <p className="text-sm font-medium">No new notification for now</p>
             )}
           </div>
         )}
