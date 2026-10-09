@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 
 class NotificationItem extends PureComponent {
   render() {
     const { type, html, value, markAsRead, id } = this.props;
 
     const textColorClass =
-      type === 'urgent'
-        ? 'text-[var(--urgent-notification-item)]'
-        : 'text-[var(--default-notification-item)]';
+      type === "urgent"
+        ? "text-[var(--urgent-notification-item)]"
+        : "text-[var(--default-notification-item)]";
 
     if (html) {
       return (
@@ -34,8 +34,8 @@ class NotificationItem extends PureComponent {
 }
 
 NotificationItem.defaultProps = {
-  type: 'default',
-  value: '',
+  type: "default",
+  value: "",
   html: undefined,
   markAsRead: () => {},
   id: 0,

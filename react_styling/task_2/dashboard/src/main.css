@@ -1,7 +1,7 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
-  --font-roboto: 'Roboto', sans-serif;
+  --font-roboto: "Roboto", sans-serif;
   --color-table-header: #deb5b5;
   --color-table-rows: #cdcdcd;
   --main-color: #e1003c;
