@@ -45,7 +45,7 @@ class Notifications extends Component {
           Your notifications
         </div>
         {displayDrawer && (
-          <div className="Notifications relative w-[25%] min-w-[300px] border-2 border-dashed border-[var(--main-color)] p-[6px] bg-white">
+          <div className="Notifications relative w-[25%] min-w-[300px] border-2 border-dotted border-[var(--main-color)] p-[6px] bg-white">
             <button
               style={{
                 position: 'absolute',
@@ -60,25 +60,29 @@ class Notifications extends Component {
             >
               <img src={closeIcon} alt="close icon" width="10px" />
             </button>
-            <p className="text-sm font-medium mb-2">
-              Here is the list of notifications
-            </p>
-            <ul className="list-disc pl-5">
-              {notifications.length === 0 ? (
+            {notifications.length > 0 ? (
+              <>
+                <p className="text-sm font-medium mb-2">
+                  Here is the list of notifications
+                </p>
+                <ul className="list-disc pl-5">
+                  {notifications.map((notif) => (
+                    <NotificationItem
+                      key={notif.id}
+                      id={notif.id}
+                      type={notif.type}
+                      value={notif.value}
+                      html={notif.html}
+                      markAsRead={this.markAsRead}
+                    />
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <ul>
                 <NotificationItem value="No new notification for now" />
-              ) : (
-                notifications.map((notif) => (
-                  <NotificationItem
-                    key={notif.id}
-                    id={notif.id}
-                    type={notif.type}
-                    value={notif.value}
-                    html={notif.html}
-                    markAsRead={this.markAsRead}
-                  />
-                ))
-              )}
-            </ul>
+              </ul>
+            )}
           </div>
         )}
       </div>
