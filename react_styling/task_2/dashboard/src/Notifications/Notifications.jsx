@@ -45,7 +45,7 @@ class Notifications extends Component {
           Your notifications
         </div>
         {displayDrawer && (
-          <div className="Notifications relative border-2 border-dashed border-[var(--main-color)] p-[6px] w-full md:w-1/4">
+          <div className="Notifications relative border-2 border-dotted border-[var(--main-color)] p-[6px] w-full md:w-1/4">
             <button
               style={{
                 position: "absolute",
