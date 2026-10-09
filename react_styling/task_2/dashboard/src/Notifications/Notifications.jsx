@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import NotificationItem from './NotificationItem';
-import closeIcon from '../assets/close-icon.png';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import NotificationItem from "./NotificationItem";
+import closeButton from "../assets/close-button.png";
 
 const NotificationItemShape = PropTypes.shape({
   id: PropTypes.number.isRequired,
@@ -45,40 +45,40 @@ class Notifications extends Component {
           Your notifications
         </div>
         {displayDrawer && (
-          <div className="Notifications relative border-2 border-dotted border-[var(--color-main-color)] p-[6px] w-[350px]">
+          <div className="Notifications relative border-2 border-dashed border-[var(--main-color)] p-[6px] w-full md:w-1/4">
             <button
               style={{
-                position: 'absolute',
-                right: '10px',
-                top: '10px',
-                background: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
+                position: "absolute",
+                right: "10px",
+                top: "10px",
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
               }}
               aria-label="Close"
-              onClick={() => console.log('Close button has been clicked')}
+              onClick={() => console.log("Close button has been clicked")}
             >
-              <img src={closeIcon} alt="close icon" className="w-2.5 h-2.5" />
+              <img src={closeButton} alt="close icon" className="w-2.5 h-2.5" />
             </button>
-            {notifications.length > 0 && (
-              <p className="m-0 pr-6">Here is the list of notifications</p>
+            {notifications.length === 0 ? (
+              <p className="m-0">No new notification for now</p>
+            ) : (
+              <>
+                <p className="m-0 pr-6">Here is the list of notifications</p>
+                <ul className="list-disc pl-8 m-0">
+                  {notifications.map((notif) => (
+                    <NotificationItem
+                      key={notif.id}
+                      id={notif.id}
+                      type={notif.type}
+                      value={notif.value}
+                      html={notif.html}
+                      markAsRead={this.markAsRead}
+                    />
+                  ))}
+                </ul>
+              </>
             )}
-            <ul className="list-disc pl-8 m-0">
-              {notifications.length === 0 ? (
-                <NotificationItem value="No new notification for now" />
-              ) : (
-                notifications.map((notif) => (
-                  <NotificationItem
-                    key={notif.id}
-                    id={notif.id}
-                    type={notif.type}
-                    value={notif.value}
-                    html={notif.html}
-                    markAsRead={this.markAsRead}
-                  />
-                ))
-              )}
-            </ul>
           </div>
         )}
       </div>
