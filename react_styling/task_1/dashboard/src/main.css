@@ -1,9 +1,14 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+
+:root {
+  --color-table-header: #deb5b5;
+  --color-table-rows: #CDCDCD;
+}
 
 @theme {
-  --font-roboto: 'Roboto', sans-serif;
+  --font-roboto: "Roboto", sans-serif;
   --color-table-header: #deb5b5;
-  --color-table-rows: #cdcdcd;
+  --color-table-rows: #CDCDCD;
 }
 
 @layer base {

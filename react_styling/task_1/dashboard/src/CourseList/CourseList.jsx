@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import CourseListRow from './CourseListRow';
+import React from "react";
+import PropTypes from "prop-types";
+import CourseListRow from "./CourseListRow";
 
 const CourseShape = PropTypes.shape({
   id: PropTypes.number.isRequired,
@@ -8,7 +8,7 @@ const CourseShape = PropTypes.shape({
   credit: PropTypes.number.isRequired,
 });
 
-function CourseList({ courses }) {
+function CourseList({ courses = [] }) {
   return (
     <div className="w-[80%] mx-auto my-12">
       <table

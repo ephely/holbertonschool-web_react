@@ -1,20 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 function CourseListRow({
   isHeader = false,
-  textFirstCell = '',
+  textFirstCell = "",
   textSecondCell = null,
 }) {
-  const rowStyle = {
-    backgroundColor: isHeader ? '#deb5b5' : '#CDCDCD',
-    opacity: isHeader ? '0.66' : '0.45',
-  };
+  const rowClass = isHeader
+    ? "bg-[var(--color-table-header)] opacity-[66%]"
+    : "bg-[var(--color-table-rows)] opacity-[45%]";
 
   if (isHeader) {
     if (textSecondCell === null) {
       return (
-        <tr style={rowStyle}>
+        <tr className={rowClass}>
           <th colSpan="2" className="border border-gray-400 py-2 text-center">
             {textFirstCell}
           </th>
@@ -22,7 +21,7 @@ function CourseListRow({
       );
     }
     return (
-      <tr style={rowStyle}>
+      <tr className={rowClass}>
         <th className="border border-gray-400 py-2 pl-2 text-left">
           {textFirstCell}
         </th>
@@ -33,13 +32,29 @@ function CourseListRow({
     );
   }
 
+  if (textSecondCell === null) {
+    return (
+      <tr className={rowClass}>
+        <td colSpan="2" className="border border-gray-400 py-2 text-center">
+          {textFirstCell}
+        </td>
+      </tr>
+    );
+  }
+
   return (
-    <tr style={rowStyle}>
+    <tr className={rowClass}>
       <td className="border border-gray-400 py-1 pl-2">{textFirstCell}</td>
       <td className="border border-gray-400 py-1 pl-2">{textSecondCell}</td>
     </tr>
   );
 }
+
+CourseListRow.defaultProps = {
+  isHeader: false,
+  textFirstCell: "",
+  textSecondCell: null,
+};
 
 CourseListRow.propTypes = {
   isHeader: PropTypes.bool,
