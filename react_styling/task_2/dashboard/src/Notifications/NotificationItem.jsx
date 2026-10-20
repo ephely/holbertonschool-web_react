@@ -14,7 +14,7 @@ class NotificationItem extends PureComponent {
       return (
         <li
           data-notification-type={type}
-          className={`cursor-pointer ${textColorClass}`}
+          className={textColorClass}
           dangerouslySetInnerHTML={html}
           onClick={() => markAsRead(id)}
         />
@@ -24,7 +24,7 @@ class NotificationItem extends PureComponent {
     return (
       <li
         data-notification-type={type}
-        className={`cursor-pointer ${textColorClass}`}
+        className={textColorClass}
         onClick={() => markAsRead(id)}
       >
         {value}
