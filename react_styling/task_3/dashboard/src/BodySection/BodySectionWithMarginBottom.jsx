@@ -1,11 +1,10 @@
 import { Component } from 'react';
 import BodySection from './BodySection';
-import './BodySectionWithMarginBottom.css';
 
 class BodySectionWithMarginBottom extends Component {
   render() {
     return (
-      <div className="bodySectionWithMargin">
+      <div className="bodySectionWithMargin mb-10">
         <BodySection {...this.props} />
       </div>
     );
