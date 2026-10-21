@@ -1,35 +1,20 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import NotificationItem from "./NotificationItem";
-import closeButton from "../assets/close-button.png";
-
-const NotificationItemShape = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  type: PropTypes.string,
-  value: PropTypes.string,
-  html: PropTypes.shape({
-    __html: PropTypes.string,
-  }),
-});
+import { Component } from 'react';
+import closeIcon from '../assets/close-button.png';
+import NotificationItem from './NotificationItem';
 
 class Notifications extends Component {
+  static defaultProps = {
+    notifications: [],
+    displayDrawer: false,
+  };
+
   constructor(props) {
     super(props);
     this.markAsRead = this.markAsRead.bind(this);
   }
 
   shouldComponentUpdate(nextProps) {
-    const currentLength = this.props.notifications
-      ? this.props.notifications.length
-      : 0;
-    const nextLength = nextProps.notifications
-      ? nextProps.notifications.length
-      : 0;
-
-    return (
-      nextLength !== currentLength ||
-      nextProps.displayDrawer !== this.props.displayDrawer
-    );
+    return nextProps.notifications.length !== this.props.notifications.length;
   }
 
   markAsRead(id) {
@@ -37,42 +22,40 @@ class Notifications extends Component {
   }
 
   render() {
-    const { displayDrawer, notifications } = this.props;
+    const { notifications, displayDrawer } = this.props;
 
     return (
-      <div className="NotificationsComp absolute top-3 right-3 flex flex-col items-end float-right">
-        <div className="menuItem font-normal text-right mb-1">
-          Your notifications
-        </div>
+      <div className="notifications-wrapper absolute top-3 right-5 z-10 w-full text-right md:w-1/4">
+        <div className="notification-title mb-1">Your notifications</div>
         {displayDrawer && (
-          <div className="Notifications relative border-2 border-dashed border-[var(--main-color)] p-1.5 w-full md:w-1/4">
+          <div className="notification-items border-2 border-dashed border-(--main-color) bg-white p-1.5 text-left">
             <button
-              style={{
-                position: "absolute",
-                right: "10px",
-                top: "10px",
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-              }}
+              type="button"
               aria-label="Close"
-              onClick={() => console.log("Close button has been clicked")}
+              style={{
+                float: 'right',
+                padding: 0,
+                border: 'none',
+                background: 'transparent',
+                cursor: 'pointer',
+              }}
+              onClick={() => console.log('Close button has been clicked')}
             >
-              <img src={closeButton} alt="close icon" className="w-2.5 h-2.5" />
+              <img src={closeIcon} alt="" className="h-3 w-3" />
             </button>
             {notifications.length === 0 ? (
-              <p className="m-0">No new notification for now</p>
+              <p>No new notification for now</p>
             ) : (
               <>
-                <p className="m-0 pr-6">Here is the list of notifications</p>
-                <ul className="list-disc pl-8 m-0">
-                  {notifications.map((notif) => (
+                <p>Here is the list of notifications</p>
+                <ul className="list-[square] pl-5">
+                  {notifications.map((notification) => (
                     <NotificationItem
-                      key={notif.id}
-                      id={notif.id}
-                      type={notif.type}
-                      value={notif.value}
-                      html={notif.html}
+                      key={notification.id}
+                      id={notification.id}
+                      type={notification.type}
+                      html={notification.html}
+                      value={notification.value}
                       markAsRead={this.markAsRead}
                     />
                   ))}
@@ -85,15 +68,5 @@ class Notifications extends Component {
     );
   }
 }
-
-Notifications.defaultProps = {
-  displayDrawer: false,
-  notifications: [],
-};
-
-Notifications.propTypes = {
-  displayDrawer: PropTypes.bool,
-  notifications: PropTypes.arrayOf(NotificationItemShape),
-};
 
 export default Notifications;
