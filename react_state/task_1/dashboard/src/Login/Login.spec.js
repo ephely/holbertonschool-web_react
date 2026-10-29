@@ -13,19 +13,31 @@ describe('Login component', () => {
     expect(submitButton).toBeDisabled();
   });
 
-  test('submit button becomes enabled after entering valid email and password (at least 8 chars)', () => {
+  test('should not accept invalid email', () => {
     render(<Login />);
     const emailInput = screen.getByLabelText(/email/i);
     const passwordInput = screen.getByLabelText(/password/i);
     const submitButton = screen.getByRole('button', { name: /ok/i });
 
+    fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+
     expect(submitButton).toBeDisabled();
+  });
+
+  test('should accept passwords of at least 8 characters', () => {
+    render(<Login />);
+    const emailInput = screen.getByLabelText(/email/i);
+    const passwordInput = screen.getByLabelText(/password/i);
+    const submitButton = screen.getByRole('button', { name: /ok/i });
 
     fireEvent.change(emailInput, {
       target: { value: 'test@holberton.school' },
     });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    fireEvent.change(passwordInput, { target: { value: 'short' } });
+    expect(submitButton).toBeDisabled();
 
+    fireEvent.change(passwordInput, { target: { value: 'longpassword' } });
     expect(submitButton).toBeEnabled();
   });
 });
