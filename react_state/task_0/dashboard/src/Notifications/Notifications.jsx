@@ -19,12 +19,16 @@ class Notifications extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const currentLength = this.props.notifications
-      ? this.props.notifications.length
-      : 0;
-    const nextLength = nextProps.notifications
-      ? nextProps.notifications.length
-      : 0;
+    const currentLength = (
+      this.props.notifications ||
+      this.props.listNotifications ||
+      []
+    ).length;
+    const nextLength = (
+      nextProps.notifications ||
+      nextProps.listNotifications ||
+      []
+    ).length;
 
     return (
       nextLength !== currentLength ||
@@ -39,10 +43,11 @@ class Notifications extends Component {
   render() {
     const {
       displayDrawer,
-      notifications,
       handleDisplayDrawer,
       handleHideDrawer,
     } = this.props;
+    const notifications =
+      this.props.notifications || this.props.listNotifications || [];
 
     return (
       <div className="NotificationsComp absolute top-3 right-3 flex flex-col items-end z-50">
@@ -99,6 +104,7 @@ class Notifications extends Component {
 Notifications.defaultProps = {
   displayDrawer: false,
   notifications: [],
+  listNotifications: [],
   handleDisplayDrawer: () => {},
   handleHideDrawer: () => {},
 };
@@ -106,6 +112,7 @@ Notifications.defaultProps = {
 Notifications.propTypes = {
   displayDrawer: PropTypes.bool,
   notifications: PropTypes.arrayOf(NotificationItemShape),
+  listNotifications: PropTypes.arrayOf(NotificationItemShape),
   handleDisplayDrawer: PropTypes.func,
   handleHideDrawer: PropTypes.func,
 };

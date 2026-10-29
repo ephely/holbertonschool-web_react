@@ -1,12 +1,6 @@
 import { PureComponent } from 'react';
 
 class NotificationItem extends PureComponent {
-  static defaultProps = {
-    type: 'default',
-    value: '',
-    markAsRead: () => {},
-  };
-
   render() {
     const { type, html, value, markAsRead, id } = this.props;
     const colorClass = `${
@@ -38,5 +32,11 @@ class NotificationItem extends PureComponent {
     );
   }
 }
+
+NotificationItem.defaultProps = {
+  type: 'default',
+  value: '',
+  markAsRead: () => {},
+};
 
 export default NotificationItem;

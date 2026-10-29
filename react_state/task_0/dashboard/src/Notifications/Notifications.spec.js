@@ -110,5 +110,19 @@ describe('Notifications component', () => {
 
       expect(renderSpy).toHaveBeenCalledTimes(2);
     });
+
+    test('re-renders when displayDrawer prop changes', () => {
+      const { rerender } = render(
+        <Notifications displayDrawer={false} />,
+      );
+
+      expect(renderSpy).toHaveBeenCalledTimes(1);
+
+      rerender(
+        <Notifications displayDrawer={true} />,
+      );
+
+      expect(renderSpy).toHaveBeenCalledTimes(2);
+    });
   });
 });

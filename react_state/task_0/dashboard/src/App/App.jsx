@@ -7,7 +7,6 @@ import Notifications from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from '../BodySection/BodySection';
-import WithLogging from '../HOC/WithLogging';
 
 class App extends Component {
   constructor(props) {
@@ -109,4 +108,4 @@ App.propTypes = {
   logOut: PropTypes.func,
 };
 
-export default WithLogging(App);
+export default App;
