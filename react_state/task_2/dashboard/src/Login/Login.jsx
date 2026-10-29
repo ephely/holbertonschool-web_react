@@ -5,13 +5,30 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: props.email || '',
+      password: props.password || '',
       enableSubmit: false,
     };
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.email !== this.props.email ||
+      prevProps.password !== this.props.password
+    ) {
+      this.setState(
+        {
+          email: this.props.email,
+          password: this.props.password,
+        },
+        () => {
+          this.validateForm(this.state.email, this.state.password);
+        },
+      );
+    }
   }
 
   handleLoginSubmit(event) {
@@ -96,10 +113,14 @@ class Login extends Component {
 
 Login.defaultProps = {
   logIn: () => {},
+  email: '',
+  password: '',
 };
 
 Login.propTypes = {
   logIn: PropTypes.func,
+  email: PropTypes.string,
+  password: PropTypes.string,
 };
 
 export default Login;
