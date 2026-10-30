@@ -28,7 +28,9 @@ describe('App component with data fetching', () => {
       render(<App />);
     });
 
-    expect(axios.get).toHaveBeenCalledWith('/notifications.json');
+    expect(axios.get).toHaveBeenCalledWith(
+      'http://localhost:5173/notifications.json',
+    );
 
     act(() => {
       axios.mockResponse({
@@ -63,7 +65,9 @@ describe('App component with data fetching', () => {
     fireEvent.change(passwordInput, { target: { value: 'password123' } });
     fireEvent.click(submitButton);
 
-    expect(axios.get).toHaveBeenCalledWith('/courses.json');
+    expect(axios.get).toHaveBeenCalledWith(
+      'http://localhost:5173/courses.json',
+    );
 
     act(() => {
       axios.mockResponse({

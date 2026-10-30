@@ -47,10 +47,9 @@ function App() {
     );
   }, []);
 
-  // Fetch notifications on mount
   useEffect(() => {
     axios
-      .get('/notifications.json')
+      .get('http://localhost:5173/notifications.json')
       .then((response) => {
         setNotifications(response.data);
       })
@@ -61,11 +60,10 @@ function App() {
       });
   }, []);
 
-  // Fetch courses when user authentication status changes
   useEffect(() => {
     if (user.isLoggedIn) {
       axios
-        .get('/courses.json')
+        .get('http://localhost:5173/courses.json')
         .then((response) => {
           setCourses(response.data);
         })
