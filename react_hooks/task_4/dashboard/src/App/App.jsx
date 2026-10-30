@@ -8,6 +8,7 @@ import CourseList from '../CourseList/CourseList';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from '../BodySection/BodySection';
 import newContext, { user as defaultUser } from '../Context/context';
+import { getLatestNotification } from '../utils/utils';
 
 function App() {
   const [displayDrawer, setDisplayDrawer] = useState(true);
@@ -48,32 +49,60 @@ function App() {
   }, []);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5173/notifications.json')
-      .then((response) => {
-        setNotifications(response.data);
-      })
-      .catch((error) => {
+    let ignore = false;
+
+    const fetchNotifications = async () => {
+      try {
+        const response = await axios.get(
+          'http://localhost:5173/notifications.json',
+        );
+        if (ignore) return;
+        const data = Array.isArray(response.data) ? response.data : [];
+        setNotifications(
+          data.map((notif) =>
+            notif.id === 3
+              ? { ...notif, html: { __html: getLatestNotification() } }
+              : notif,
+          ),
+        );
+      } catch (error) {
         if (process.env.NODE_ENV !== 'production') {
           console.error(error);
         }
-      });
+      }
+    };
+
+    fetchNotifications();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   useEffect(() => {
-    if (user.isLoggedIn) {
-      axios
-        .get('http://localhost:5173/courses.json')
-        .then((response) => {
-          setCourses(response.data);
-        })
-        .catch((error) => {
-          if (process.env.NODE_ENV !== 'production') {
-            console.error(error);
-          }
-        });
-    }
-  }, [user.isLoggedIn]);
+    if (!user.isLoggedIn) return undefined;
+
+    let ignore = false;
+
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get('http://localhost:5173/courses.json');
+        if (!ignore) {
+          setCourses(Array.isArray(response.data) ? response.data : []);
+        }
+      } catch (error) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(error);
+        }
+      }
+    };
+
+    fetchCourses();
+
+    return () => {
+      ignore = true;
+    };
+  }, [user]);
 
   const contextValue = useMemo(
     () => ({

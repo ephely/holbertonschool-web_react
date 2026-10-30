@@ -13,6 +13,16 @@ afterEach(() => {
   axios.reset();
 });
 
+const logInUser = () => {
+  fireEvent.change(screen.getByLabelText(/email/i), {
+    target: { value: 'test@holberton.school' },
+  });
+  fireEvent.change(screen.getByLabelText(/password/i), {
+    target: { value: 'password123' },
+  });
+  fireEvent.click(screen.getByRole('button', { name: /ok/i }));
+};
+
 describe('App component with data fetching', () => {
   test('renders News from the School section by default', () => {
     act(() => {
@@ -55,15 +65,7 @@ describe('App component with data fetching', () => {
       axios.mockResponse({ data: [] });
     });
 
-    const emailInput = screen.getByLabelText(/email/i);
-    const passwordInput = screen.getByLabelText(/password/i);
-    const submitButton = screen.getByRole('button', { name: /ok/i });
-
-    fireEvent.change(emailInput, {
-      target: { value: 'test@holberton.school' },
-    });
-    fireEvent.change(passwordInput, { target: { value: 'password123' } });
-    fireEvent.click(submitButton);
+    logInUser();
 
     expect(axios.get).toHaveBeenCalledWith(
       'http://localhost:5173/courses.json',
@@ -84,5 +86,48 @@ describe('App component with data fetching', () => {
       ).toBeInTheDocument();
       expect(screen.getByText('ES6')).toBeInTheDocument();
     });
+  });
+
+  test('does not fetch courses when user is logged out', () => {
+    act(() => {
+      render(<App />);
+    });
+
+    expect(axios.get).not.toHaveBeenCalledWith(
+      'http://localhost:5173/courses.json',
+    );
+  });
+
+  test('Notifications state remains unchanged through login / logout', async () => {
+    act(() => {
+      render(<App />);
+    });
+
+    act(() => {
+      axios.mockResponse({
+        data: [{ id: 1, type: 'default', value: 'New course available' }],
+      });
+    });
+
+    await waitFor(() =>
+      expect(screen.getByText('New course available')).toBeInTheDocument(),
+    );
+
+    logInUser();
+
+    act(() => {
+      axios.mockResponse({ data: [] });
+    });
+
+    expect(screen.getByText('New course available')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText(/logout/i));
+
+    expect(screen.getByText('New course available')).toBeInTheDocument();
+
+    const notificationCalls = axios.get.mock.calls.filter(
+      ([url]) => url === 'http://localhost:5173/notifications.json',
+    );
+    expect(notificationCalls).toHaveLength(1);
   });
 });

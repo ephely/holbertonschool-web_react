@@ -1,7 +1,13 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
-function NotificationItem({ type, html, value, markAsRead, id }) {
+function NotificationItem({
+  type = 'default',
+  html,
+  value = '',
+  markAsRead = () => {},
+  id = 0,
+}) {
   const textColorClass =
     type === 'urgent'
       ? 'text-[var(--color-urgent-notification-item)]'
@@ -30,14 +36,6 @@ function NotificationItem({ type, html, value, markAsRead, id }) {
     </li>
   );
 }
-
-NotificationItem.defaultProps = {
-  type: 'default',
-  value: '',
-  html: undefined,
-  markAsRead: () => {},
-  id: 0,
-};
 
 NotificationItem.propTypes = {
   type: PropTypes.string,

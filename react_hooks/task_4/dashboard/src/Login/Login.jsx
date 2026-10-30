@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import WithLogging from '../HOC/WithLogging';
 
-function Login({ logIn }) {
+function Login({ logIn = () => {} }) {
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -80,10 +80,6 @@ function Login({ logIn }) {
     </div>
   );
 }
-
-Login.defaultProps = {
-  logIn: () => {},
-};
 
 Login.propTypes = {
   logIn: PropTypes.func,
