@@ -45,6 +45,44 @@ describe('App component', () => {
     ).toBeInTheDocument();
   });
 
+  test('logOut resets user state correctly', () => {
+    render(<App />);
+
+    // First log in
+    const emailInput = screen.getByLabelText(/email/i);
+    const passwordInput = screen.getByLabelText(/password/i);
+    const submitButton = screen.getByRole('button', { name: /ok/i });
+
+    fireEvent.change(emailInput, {
+      target: { value: 'test@holberton.school' },
+    });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    fireEvent.click(submitButton);
+
+    // Verify logged in
+    expect(
+      screen.getByRole('heading', { name: /course list/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Welcome test@holberton.school/i),
+    ).toBeInTheDocument();
+
+    // Now log out
+    const logoutLink = screen.getByText(/logout/i);
+    fireEvent.click(logoutLink);
+
+    // Verify logged out - isLoggedIn is false, email and password are cleared
+    expect(
+      screen.queryByRole('heading', { name: /course list/i }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Welcome test@holberton.school/i),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: /log in to continue/i }),
+    ).toBeInTheDocument();
+  });
+
   test('handleDisplayDrawer and handleHideDrawer update displayDrawer state correctly', () => {
     render(<App />);
 

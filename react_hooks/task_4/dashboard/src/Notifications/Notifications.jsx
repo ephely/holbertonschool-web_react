@@ -86,10 +86,4 @@ Notifications.propTypes = {
   markNotificationAsRead: PropTypes.func,
 };
 
-export default memo(Notifications, (prevProps, nextProps) => {
-  return (
-    prevProps.displayDrawer === nextProps.displayDrawer &&
-    (prevProps.notifications?.length || 0) ===
-      (nextProps.notifications?.length || 0)
-  );
-});
+export default memo(Notifications);
