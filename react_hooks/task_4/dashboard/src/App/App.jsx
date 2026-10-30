@@ -6,7 +6,6 @@ import Notifications from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from '../BodySection/BodySection';
-import WithLogging from '../HOC/WithLogging';
 import newContext, { user as defaultUser } from '../Context/context';
 
 function App() {
@@ -107,4 +106,4 @@ function App() {
   );
 }
 
-export default WithLogging(App);
+export default App;
