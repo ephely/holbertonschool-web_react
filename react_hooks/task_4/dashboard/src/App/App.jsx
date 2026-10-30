@@ -107,4 +107,4 @@ function App() {
   );
 }
 
-export default WithLogging(App);
+export default WithLoggini(App);
