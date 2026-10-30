@@ -10,17 +10,25 @@ describe('App component', () => {
     ).toBeInTheDocument();
   });
 
-  test('markNotificationAsRead removes a notification from state', () => {
+  test('markNotificationAsRead works as expected: logs to console and removes notification from state', () => {
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
     render(<App />);
 
     const menuItem = screen.getByText('Your notifications');
     fireEvent.click(menuItem);
 
-    expect(screen.getByText('New course available')).toBeInTheDocument();
+    const notificationItem = screen.getByText('New course available');
+    expect(notificationItem).toBeInTheDocument();
 
-    const notifItem = screen.getByText('New course available');
-    fireEvent.click(notifItem);
+    fireEvent.click(notificationItem);
 
     expect(screen.queryByText('New course available')).not.toBeInTheDocument();
+
+    expect(consoleSpy).toHaveBeenCalledWith(
+      'Notification 1 has been marked as read',
+    );
+
+    consoleSpy.mockRestore();
   });
 });
