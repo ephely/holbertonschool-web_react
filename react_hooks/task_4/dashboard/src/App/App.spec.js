@@ -10,7 +10,7 @@ describe('App component', () => {
     ).toBeInTheDocument();
   });
 
-  test('markNotificationAsRead removes a notification from state and logs to console', () => {
+  test('markNotificationAsRead works as expected: logs to console and removes notification from state', () => {
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
     render(<App />);
 
@@ -43,5 +43,21 @@ describe('App component', () => {
     expect(
       screen.getByRole('heading', { name: /course list/i }),
     ).toBeInTheDocument();
+  });
+
+  test('handleDisplayDrawer and handleHideDrawer update displayDrawer state correctly', () => {
+    render(<App />);
+
+    const closeButton = screen.getByRole('button', { name: /close/i });
+    expect(closeButton).toBeInTheDocument();
+
+    fireEvent.click(closeButton);
+    expect(
+      screen.queryByRole('button', { name: /close/i }),
+    ).not.toBeInTheDocument();
+
+    const menuItem = screen.getByText('Your notifications');
+    fireEvent.click(menuItem);
+    expect(screen.getByRole('button', { name: /close/i })).toBeInTheDocument();
   });
 });
