@@ -34,7 +34,6 @@ function App() {
     dispatch({ type: APP_ACTIONS.MARK_NOTIFICATION_READ, payload: { id } });
   }, []);
 
-  // Fetch notifications on mount
   useEffect(() => {
     axios
       .get('http://localhost:5173/notifications.json')
@@ -51,7 +50,6 @@ function App() {
       });
   }, []);
 
-  // Fetch courses when user authentication status changes
   useEffect(() => {
     if (user.isLoggedIn) {
       axios
