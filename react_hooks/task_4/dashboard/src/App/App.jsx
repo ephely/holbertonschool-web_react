@@ -17,11 +17,11 @@ function App() {
   const [courses, setCourses] = useState([]);
 
   const handleDisplayDrawer = useCallback(() => {
-    setDisplayDrawer(true);
+    setDisplayDrawer(() => true);
   }, []);
 
   const handleHideDrawer = useCallback(() => {
-    setDisplayDrawer(false);
+    setDisplayDrawer(() => false);
   }, []);
 
   const logIn = useCallback((email, password) => {
